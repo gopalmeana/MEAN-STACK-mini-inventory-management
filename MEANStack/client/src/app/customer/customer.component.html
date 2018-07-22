@@ -1,0 +1,61 @@
+<p>
+  Customer!
+</p>
+
+<button type="submit" class="btn btn-info" (click)="addCustomer()">Add Customer</button>
+
+<br>
+<br>
+<div class="row" *ngIf="showCustomerTable">
+  <table class="table table-striped toWide">
+    <tr>
+      <th class="">Customer Name</th>
+      <th class="">Quanti Of ProdReq</th>
+      <th class="">Produt Name</th>
+      <th class="">Status</th>
+      <th class="">Action</th>
+    </tr>
+    <tr *ngFor="let custList of customerList">
+      <td style="text-align: left;">{{custList.customerName}} </td>
+      <td style="text-align: left;">{{custList.quantiOfProdReq}} </td>
+      <td style="text-align: left;">{{custList.produtName}} </td>
+      <td style="text-align: left;">{{custList.status}} </td>
+      <button type="submit" class="btn btn-danger" (click)="openDelete(custList)">Delete</button>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="showCustomerForm">
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="customerName">Customer Name:</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="customerName" placeholder="Enter customerName" name="customerName" [(ngModel)]="customerModel.customerName">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="produtName">Product Name:</label>
+      <div class="col-sm-5">
+        <select class="form-control" name="produtName" [(ngModel)]="customerModel.produtName" (change)="productSelect($event.target.value)">
+          <option *ngFor="let pordList of productList" value={{pordList.produtName}}>
+            {{pordList.produtName}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="quantiOfProdReq">Quantity Of Product:</label>
+      <div class="col-sm-5">
+        <input type="number" class="form-control" id="quantiOfProdReq" placeholder="Enter quantiOfProdReq" name="quantiOfProdReq"
+          [(ngModel)]="customerModel.quantiOfProdReq" (blur)="quantiOfProdReq(customerModel.quantiOfProdReq)" />
+        <p *ngIf="quantiOfProdReqError" style="color:red;"> Please select lessThen or equal {{quantityOfProduct}} </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-5">
+        <button type="submit" class="btn btn-success" (click)="save()">Save</button>
+      </div>
+    </div>
+  </form>
+</div>
